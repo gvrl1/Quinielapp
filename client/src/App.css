@@ -1,172 +1,238 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.tv-mode {
+  position: relative;
   min-height: 100vh;
-  color: #fff;
-  font-size: 16px; /* Base más chica para que entre todo */
-  overflow-x: hidden;
 }
 
-/* Escalado para pantallas grandes */
-@media (min-width: 1920px) {
-  body {
-    font-size: 18px;
-  }
-}
-
-@media (min-width: 2560px) {
-  body {
-    font-size: 20px;
-  }
-}
-
-.app {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.main-content {
-  flex: 1;
-  padding: 20px; /* más compacto */
-  max-width: 100%;
-  margin: 0 auto;
-  width: 100%;
-}
-
-/* Loading y errores */
-.loading-container,
-.loading-overlay {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
-}
-
-.loading-container {
-  min-height: 50vh;
-  text-align: center;
-}
-
-.loading-overlay {
+/* 📌 Barra superior fija con controles */
+.tv-controls {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
   z-index: 1000;
-}
-
-.loading-container p,
-.loading-overlay p {
-  margin-top: 15px;
-  font-size: 1rem;
-}
-
-.error-message {
-  background: #ff6b6b;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
-  font-size: 0.9rem;
-}
-
-.retry-button {
-  background: white;
-  color: #ff6b6b;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
+  gap: 15px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 12px 20px;
+  border-radius: 0 0 15px 15px;
+  backdrop-filter: blur(10px);
   transition: all 0.3s ease;
 }
 
-.retry-button:hover {
-  background: #f0f0f0;
-  transform: translateY(-2px);
+.tv-controls:hover {
+  background: rgba(0, 0, 0, 0.9);
 }
 
-/* ======================================================
-   ✅ Modo lista vertical (una columna completa en TV)
-   ====================================================== */
-.results-grid {
+.control-button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 45px;
+  height: 45px;
+}
+
+.control-button:hover {
+  background: #2980b9;
+  transform: scale(1.05);
+}
+
+.control-button.active {
+  background: #27ae60;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.view-selector {
+  display: flex;
+  gap: 8px;
+}
+
+.view-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.view-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.view-button.active {
+  background: #e74c3c;
+  border-color: #e74c3c;
+  font-weight: bold;
+}
+
+/* 📌 Indicador de estado en la esquina superior izquierda */
+.tv-status {
+  position: fixed;
+  top: 70px; /* lo bajamos para no chocar con la barra */
+  left: 20px;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 10px;
-  width: 100%;
 }
 
-.results-grid > * {
-  width: 100%;
-}
-
-/* Compactar cards */
-.card {
-  font-size: 0.9rem;
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
   padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
 }
 
-.card h2,
-.card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 6px;
+.status-dot {
+  width: 12px;
+  height: 12px;
+  background: #e74c3c;
+  border-radius: 50%;
+  animation: blink 1s infinite;
 }
 
-/* ======================================================
-   🔄 Alternativa: activar esta versión para 2 columnas
-   ======================================================
-.results-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr; 
-  gap: 15px;
-  margin-top: 10px;
-}
-@media (max-width: 1280px) {
-  .results-grid {
-    grid-template-columns: 1fr;
-  }
-}
-====================================================== */
-
-/* Responsive */
-@media (max-width: 768px) {
-  .main-content {
-    padding: 10px;
-  }
-  
-  .results-grid {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .error-message {
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
-  }
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
 }
 
-@media (max-width: 480px) {
-  .main-content {
-    padding: 5px;
+.rotation-indicator {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  backdrop-filter: blur(10px);
+}
+
+.rotation-progress {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.rotation-progress::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  animation: progress 30s linear infinite;
+}
+
+@keyframes progress {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
+}
+
+.tv-content {
+  transition: all 0.5s ease;
+  margin-top: 70px; /* espacio para que la barra no tape el contenido */
+}
+
+/* 🎯 Filtros de vista */
+.tv-content.view-0 { /* Mostrar todo */ }
+
+.tv-content.view-1 .quini6-card,
+.tv-content.view-1 .telekino-card {
+  display: none;
+}
+
+.tv-content.view-2 .quiniela-card,
+.tv-content.view-2 .telekino-card {
+  display: none;
+}
+
+.tv-content.view-3 .quiniela-card,
+.tv-content.view-3 .quini6-card {
+  display: none;
+}
+
+/* Ocultar controles en pantalla completa después de 5 segundos */
+.tv-mode:fullscreen .tv-controls {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.tv-mode:fullscreen:hover .tv-controls {
+  opacity: 1;
+}
+
+/* Optimizaciones para TV */
+@media (min-width: 1920px) {
+  .tv-controls {
+    padding: 15px 25px;
+    gap: 20px;
   }
-  
-  .results-grid {
-    gap: 8px;
+
+  .control-button {
+    padding: 14px 18px;
+    font-size: 1.3rem;
+    min-width: 55px;
+    height: 55px;
+  }
+
+  .view-button {
+    padding: 8px 12px;
+    font-size: 1rem;
+  }
+
+  .tv-status {
+    top: 90px;
+    left: 30px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .tv-controls {
+    padding: 18px 28px;
+    gap: 25px;
+  }
+
+  .control-button {
+    padding: 16px 22px;
+    font-size: 1.4rem;
+    min-width: 65px;
+    height: 65px;
+  }
+
+  .view-button {
+    padding: 10px 15px;
+    font-size: 1.05rem;
+  }
+
+  .tv-status {
+    top: 100px;
+    left: 40px;
   }
 }
