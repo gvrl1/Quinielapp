@@ -8,21 +8,21 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
-  color: #333;
-  font-size: 18px; /* Tamaño base más grande para TV */
-  overflow-x: hidden; /* Evitar scroll horizontal */
+  color: #fff;
+  font-size: 16px; /* Base más chica para que entre todo */
+  overflow-x: hidden;
 }
 
-/* Optimizaciones para pantallas de TV */
+/* Escalado para pantallas grandes */
 @media (min-width: 1920px) {
   body {
-    font-size: 24px;
+    font-size: 18px;
   }
 }
 
 @media (min-width: 2560px) {
   body {
-    font-size: 32px;
+    font-size: 20px;
   }
 }
 
@@ -34,38 +34,25 @@ body {
 
 .main-content {
   flex: 1;
-  padding: 40px; /* Más padding para TV */
-  max-width: 100%; /* Usar todo el ancho disponible */
+  padding: 20px; /* más compacto */
+  max-width: 100%;
   margin: 0 auto;
   width: 100%;
 }
 
-/* Optimizaciones para TV */
-@media (min-width: 1920px) {
-  .main-content {
-    padding: 60px;
-  }
-}
-
-@media (min-width: 2560px) {
-  .main-content {
-    padding: 80px;
-  }
-}
-
-.loading-container {
+/* Loading y errores */
+.loading-container,
+.loading-overlay {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 50vh;
   color: white;
-  text-align: center;
 }
 
-.loading-container p {
-  margin-top: 20px;
-  font-size: 1.2rem;
+.loading-container {
+  min-height: 50vh;
+  text-align: center;
 }
 
 .loading-overlay {
@@ -75,36 +62,33 @@ body {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
   z-index: 1000;
 }
 
+.loading-container p,
 .loading-overlay p {
-  margin-top: 20px;
-  font-size: 1.2rem;
+  margin-top: 15px;
+  font-size: 1rem;
 }
 
 .error-message {
   background: #ff6b6b;
   color: white;
-  padding: 15px 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+  font-size: 0.9rem;
 }
 
 .retry-button {
   background: white;
   color: #ff6b6b;
   border: none;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
@@ -116,43 +100,63 @@ body {
   transform: translateY(-2px);
 }
 
+/* ======================================================
+   ✅ Modo lista vertical (una columna completa en TV)
+   ====================================================== */
+.results-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.results-grid > * {
+  width: 100%;
+}
+
+/* Compactar cards */
+.card {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+}
+
+.card h2,
+.card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+/* ======================================================
+   🔄 Alternativa: activar esta versión para 2 columnas
+   ======================================================
 .results-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); /* Cards más grandes para TV */
-  gap: 40px; /* Más espacio entre cards */
-  margin-top: 40px;
+  grid-template-columns: 1fr 1fr; 
+  gap: 15px;
+  margin-top: 10px;
 }
-
-/* Optimizaciones para TV */
-@media (min-width: 1920px) {
+@media (max-width: 1280px) {
   .results-grid {
-    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-    gap: 60px;
-    margin-top: 60px;
+    grid-template-columns: 1fr;
   }
 }
+====================================================== */
 
-@media (min-width: 2560px) {
-  .results-grid {
-    grid-template-columns: repeat(auto-fit, minmax(800px, 1fr));
-    gap: 80px;
-    margin-top: 80px;
-  }
-}
-
+/* Responsive */
 @media (max-width: 768px) {
   .main-content {
     padding: 10px;
   }
   
   .results-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
+    flex-direction: column;
+    gap: 10px;
   }
   
   .error-message {
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     text-align: center;
   }
 }
@@ -163,6 +167,6 @@ body {
   }
   
   .results-grid {
-    gap: 10px;
+    gap: 8px;
   }
 }

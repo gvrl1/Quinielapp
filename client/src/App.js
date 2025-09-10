@@ -87,37 +87,30 @@ function App() {
           )}
 
           <div className="results-grid">
-            {resultados?.quinielaNacional && (
-              <QuinielaCard 
-                data={resultados.quinielaNacional} 
-                title="Quiniela Nacional"
-                color="blue"
-              />
-            )}
-            
-            {resultados?.quinielaMendoza && (
-              <QuinielaCard 
-                data={resultados.quinielaMendoza} 
-                title="Quiniela Mendoza"
-                color="green"
-              />
-            )}
-            
-            {resultados?.quini6 && (
-              <Quini6Card 
-                data={resultados.quini6} 
-                title="Quini 6"
-                color="purple"
-              />
-            )}
-            
-            {resultados?.telekino && (
-              <TelekinoCard 
-                data={resultados.telekino} 
-                title="Telekino"
-                color="orange"
-              />
-            )}
+            {/* Orden fijo de módulos */}
+            <QuinielaCard 
+              data={resultados?.quinielaNacional} 
+              title="Quiniela Nacional"
+              color="blue"
+            />
+
+            <QuinielaCard 
+              data={resultados?.quinielaMendoza} 
+              title="Quiniela Mendoza"
+              color="green"
+            />
+
+            <Quini6Card 
+              data={resultados?.quini6} 
+              title="Quini 6"
+              color="purple"
+            />
+
+            <TelekinoCard 
+              data={resultados?.telekino} 
+              title="Telekino"
+              color="orange"
+            />
           </div>
 
           {loading && (

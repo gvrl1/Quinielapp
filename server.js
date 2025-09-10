@@ -62,6 +62,18 @@ app.get('/api/resultados', (req, res) => {
   res.json(resultados);
 });
 
+app.post('/api/actualizar', async (req, res) => {
+  try {
+    await actualizarResultados();
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+app.get('/api/resultados', (req, res) => {
+  res.json(resultados);
+});
+
 app.get('/api/quiniela-nacional', (req, res) => {
   res.json(resultados.quinielaNacional);
 });
